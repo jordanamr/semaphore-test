@@ -18,4 +18,5 @@ const query = `{
 request('http://localhost:4000', query).then(data => {
   assert.equal(data.country.name, 'Brazil');
   assert.equal(data.country.capital, 'Brasília');
+  console.log("caca");
 });
