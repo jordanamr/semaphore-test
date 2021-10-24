@@ -13,14 +13,14 @@ blocks:
             - yarn workspace api lint
         - name: Unit tests
           commands:
-            - yarn workspace api start &
+            - yarn workspace api start
             - sleep 5
             - yarn workspace api test
             - killall node
       prologue:
         commands:
           - checkout
-          - sem-version node 16
+          - sem-version node 14
           - yarn install
     dependencies: []
     run:
@@ -31,7 +31,7 @@ blocks:
       prologue:
         commands:
           - checkout
-          - sem-version node 16
+          - sem-version node 14
           - yarn install
       jobs:
         - name: Lint
@@ -52,9 +52,9 @@ blocks:
       prologue:
         commands:
           - checkout
-          - sem-version node 16
+          - sem-version node 14
           - yarn install
-          - yarn workspace api start &
+          - yarn workspace api start
           - sleep 5
           - yarn workspace web build
       epilogue:
@@ -64,6 +64,6 @@ blocks:
       jobs:
         - name: Tests
           commands:
-            - yarn workspace web start &
+            - yarn workspace web start
             - sleep 5
             - yarn workspace web test-integration
