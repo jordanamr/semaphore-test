@@ -42,3 +42,28 @@ blocks:
             - yarn workspace web test
     run:
       when: 'change_in(''/packages/web/'', {default_branch: ''main''})'
+  - name: Integration tests
+    dependencies:
+      - API service
+      - Web app
+    run:
+      when: 'change_in([''/packages/api/'', ''/packages/web/''], {default_branch: ''main''})'
+    task:
+      prologue:
+        commands:
+          - checkout
+          - sem-version node 16
+          - yarn install
+          - yarn workspace api start &
+          - sleep 5
+          - yarn workspace web build
+      epilogue:
+        always:
+          commands:
+            - killall node
+      jobs:
+        - name: Tests
+          commands:
+            - yarn workspace web start &
+            - sleep 5
+            - yarn workspace web test-integration
